@@ -8,15 +8,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
+import kr.co.shortenurlservice.application.SimpleShortenUrlService;
 
 @RestController
 public class ShortenUrlRestController {
+
+	private final SimpleShortenUrlService simpleShortenUrlService;
+
+	public ShortenUrlRestController(SimpleShortenUrlService simpleShortenUrlService) {
+		this.simpleShortenUrlService = simpleShortenUrlService;
+	}
 
 	@PostMapping("/shortenUrl")
 	public ResponseEntity<ShortenUrlCreateResponseDto> createShortenUrl(
 		@Valid @RequestBody ShortenUrlCreateRequestDto requestDto
 	) {
-		return ResponseEntity.ok().body(null);
+		ShortenUrlCreateResponseDto responseDto =
+			simpleShortenUrlService.generateShortenUrl(requestDto);
+		return ResponseEntity.ok().body(responseDto);
 	}
 
 	@GetMapping("/{shortenUrlKey}")
