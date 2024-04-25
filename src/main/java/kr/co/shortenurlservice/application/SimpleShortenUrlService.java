@@ -2,6 +2,7 @@ package kr.co.shortenurlservice.application;
 
 import org.springframework.stereotype.Service;
 
+import kr.co.shortenurlservice.domain.ShortenUrl;
 import kr.co.shortenurlservice.domain.ShortenUrlRepository;
 import kr.co.shortenurlservice.presentation.ShortenUrlCreateRequestDto;
 import kr.co.shortenurlservice.presentation.ShortenUrlCreateResponseDto;
@@ -18,6 +19,12 @@ public class SimpleShortenUrlService {
 	public ShortenUrlCreateResponseDto generateShortenUrl(
 		ShortenUrlCreateRequestDto requestDto
 	) {
-		return null;
+		String originalUrl = requestDto.getOriginalUrl();
+		String shortenUrlKey = ShortenUrl.generateShortenUrlKey();
+
+		ShortenUrl shortenUrl = new ShortenUrl(originalUrl, shortenUrlKey);
+		shortenUrlRepository.saveShortenUrl(shortenUrl);
+
+		return new ShortenUrlCreateResponseDto(shortenUrl);
 	}
 }
