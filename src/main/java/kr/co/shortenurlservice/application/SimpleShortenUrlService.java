@@ -6,6 +6,7 @@ import kr.co.shortenurlservice.domain.ShortenUrl;
 import kr.co.shortenurlservice.domain.ShortenUrlRepository;
 import kr.co.shortenurlservice.presentation.ShortenUrlCreateRequestDto;
 import kr.co.shortenurlservice.presentation.ShortenUrlCreateResponseDto;
+import kr.co.shortenurlservice.presentation.ShortenUrlInformationDto;
 
 @Service
 public class SimpleShortenUrlService {
@@ -26,5 +27,10 @@ public class SimpleShortenUrlService {
 		shortenUrlRepository.saveShortenUrl(shortenUrl);
 
 		return new ShortenUrlCreateResponseDto(shortenUrl);
+	}
+
+	public ShortenUrlInformationDto getShortenUrlInformationByShortenUrlKey(String shortenUrlKey) {
+		ShortenUrl shortenUrl = shortenUrlRepository.findShortenUrlByShortenUrlKey(shortenUrlKey);
+		return new ShortenUrlInformationDto(shortenUrl);
 	}
 }

@@ -17,4 +17,9 @@ public class MapShortenUrlRepository implements ShortenUrlRepository {
 	public void saveShortenUrl(ShortenUrl shortenUrl) {
 		shortenUrls.put(shortenUrl.getShortenUrlKey(), shortenUrl);
 	}
+
+	@Override
+	public ShortenUrl findShortenUrlByShortenUrlKey(String shortenUrlKey) {
+		return shortenUrls.get(shortenUrlKey);
+	}
 }
