@@ -1,5 +1,10 @@
 package kr.co.shortenurlservice.presentation;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,8 +36,14 @@ public class ShortenUrlRestController {
 	@GetMapping("/{shortenUrlKey}")
 	public ResponseEntity<?> redirectShortenUrl(
 		@PathVariable String shortenUrlKey
-	) {
-		return ResponseEntity.ok().body(null);
+	) throws URISyntaxException {
+		String originalUrl = simpleShortenUrlService.getOriginalUrlByShortenUrlKey(shortenUrlKey);
+
+		URI redirectUrl = new URI(originalUrl);
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setLocation(redirectUrl);
+
+		return new ResponseEntity<>(httpHeaders, HttpStatus.MOVED_PERMANENTLY);
 	}
 
 	@GetMapping("/shortenUrl/{shortenUrlKey}")
