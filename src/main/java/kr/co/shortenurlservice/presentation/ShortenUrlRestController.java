@@ -35,7 +35,7 @@ public class ShortenUrlRestController {
 
 	@GetMapping("/{shortenUrlKey}")
 	public ResponseEntity<?> redirectShortenUrl(
-		@PathVariable String shortenUrlKey
+		@PathVariable(name = "shortenUrlKey") String shortenUrlKey
 	) throws URISyntaxException {
 		String originalUrl = simpleShortenUrlService.getOriginalUrlByShortenUrlKey(shortenUrlKey);
 
